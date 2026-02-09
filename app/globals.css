@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --nav-font-sans: var(--font-manrope), sans-serif;
+  --nav-font-display: "Cal Sans", var(--font-instrument), sans-serif;
 }
 
 @theme inline {

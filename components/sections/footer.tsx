@@ -1,0 +1,128 @@
+import { Container } from '@/components/ui/container'
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react'
+import Link from 'next/link'
+
+const footerLinks = {
+  company: [
+    { label: 'About Us', href: '#about' },
+    { label: 'Our Services', href: '#services' },
+    { label: 'Portfolio', href: '#portfolio' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  services: [
+    { label: 'Wardrobe', href: '/projects?category=wardrobe' },
+    { label: 'Bedroom Set', href: '/projects?category=bedroom' },
+    { label: 'Kitchen Set', href: '/projects?category=kitchen' },
+    { label: 'Custom Design', href: '#contact' },
+  ],
+  social: [
+    { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
+    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+  ]
+}
+
+export function Footer() {
+  return (
+    <footer className="bg-neutral-900 text-white">
+      <Container>
+        <div className="py-16 lg:py-20">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+            
+            {/* Brand */}
+            <div className="space-y-6">
+              <div className="font-serif text-3xl font-bold">
+                FurniCraft
+              </div>
+              <p className="text-neutral-400 leading-relaxed">
+                Transforming spaces with premium custom furniture. Quality craftsmanship, timeless design.
+              </p>
+              <div className="flex gap-3">
+                {footerLinks.social.map((social, idx) => (
+                  <a
+                    key={idx}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary-500 flex items-center justify-center transition-colors"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="font-semibold text-lg mb-6">Company</h3>
+              <ul className="space-y-3">
+                {footerLinks.company.map((link, idx) => (
+                  <li key={idx}>
+                    <Link
+                      href={link.href}
+                      className="text-neutral-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="font-semibold text-lg mb-6">Services</h3>
+              <ul className="space-y-3">
+                {footerLinks.services.map((link, idx) => (
+                  <li key={idx}>
+                    <Link
+                      href={link.href}
+                      className="text-neutral-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="font-semibold text-lg mb-6">Contact</h3>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-neutral-400">
+                  <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>+62 812-3456-7890</span>
+                </li>
+                <li className="flex items-start gap-3 text-neutral-400">
+                  <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>info@furnicraft.com</span>
+                </li>
+                <li className="flex items-start gap-3 text-neutral-400">
+                  <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>Jakarta, Indonesia</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/10 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-400">
+            <p>© 2026 FurniCraft. All rights reserved.</p>
+            <div className="flex gap-6">
+              <Link href="/privacy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </footer>
+  )
+}
