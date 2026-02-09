@@ -56,12 +56,6 @@ export function AboutSection() {
                 sizes="256px"
               />
             </div>
-
-            {/* Experience Badge */}
-            <div className="absolute top-8 -left-6 bg-primary-500 text-white rounded-2xl shadow-soft-xl p-6 max-w-[160px]">
-              <div className="font-serif text-5xl font-bold">10+</div>
-              <div className="text-sm mt-1 opacity-90">Years of Excellence</div>
-            </div>
           </div>
 
           {/* Right - Content */}
@@ -82,10 +76,10 @@ export function AboutSection() {
               </h2>
 
               <p className="text-lg text-neutral-600 leading-relaxed">
-                For over a decade, we&apos;ve been transforming houses into homes
-                with custom furniture that blends timeless elegance with modern
-                functionality. Every piece tells a story of precision, passion,
-                and unwavering commitment to quality.
+                For over a decade, we&apos;ve been transforming houses into
+                homes with custom furniture that blends timeless elegance with
+                modern functionality. Every piece tells a story of precision,
+                passion, and unwavering commitment to quality.
               </p>
             </div>
 
