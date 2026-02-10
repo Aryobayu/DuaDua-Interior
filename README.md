@@ -1,33 +1,52 @@
 # DuaDua-Interior
 
-This is a Next.js project bootstrapped with `create-next-app`.
+Marketing website for an interior design and custom furniture studio.
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Lucide icons
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Build for production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses `next/font` to automatically optimize and load Geist, a font family for Vercel.
+Start the production server:
 
-## Learn More
+```bash
+npm run start
+```
 
-- Next.js Documentation: https://nextjs.org/docs
-- Learn Next.js: https://nextjs.org/learn
+## Scripts
 
-## Deploy on Vercel
+- `npm run dev` - start dev server
+- `npm run build` - production build
+- `npm run start` - start production server
+- `npm run lint` - run lint checks
 
-Check out the Next.js deployment documentation:
-https://nextjs.org/docs/app/building-your-application/deploying
+## Project Structure
+
+- `app/` - Next.js routes and layout
+- `components/sections/` - page sections (hero, about, services, contact, footer)
+- `components/ui/` - reusable UI primitives
+- `lib/` - shared utilities
+- `public/` - static assets
