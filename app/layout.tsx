@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Instrument_Sans,
-  Manrope,
-} from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 
@@ -18,13 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
 });
 
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
@@ -41,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${instrumentSans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${manrope.variable} antialiased`}
       >
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -6,15 +6,15 @@ import Link from "next/link";
 
 const services = [
   {
-    title: "Wardrobe",
+    title: "Lemari & Wardrobe",
     slug: "wardrobe",
     description:
-      "Custom walk-in closets and wardrobes designed for maximum storage and elegant aesthetics",
+      "Walk-in closet dan lemari pakaian custom yang memaksimalkan ruang penyimpanan dengan desain elegan dan fungsional",
     features: [
-      "Sliding & Swing Doors",
-      "Built-in Lighting",
-      "Custom Compartments",
-      "Premium Finishes",
+      "Pintu sliding & swing door",
+      "Lampu LED built-in",
+      "Kompartemen sesuai kebutuhan",
+      "Finishing premium anti gores",
     ],
     image: "/images/services/wardrobe.jpg",
     accent: "from-primary-500 to-primary-600",
@@ -23,9 +23,9 @@ const services = [
     title: "Bedroom Set",
     slug: "bedroom",
     description:
-      "Complete bedroom solutions including beds, side tables, and dressing units for ultimate comfort",
+      "Paket lengkap kamar tidur termasuk bed frame, nakas, dan meja rias untuk kenyamanan maksimal",
     features: [
-      "Platform Beds",
+      "Platform Beds dengan Storage",
       "Storage Solutions",
       "Matching Nightstands",
       "Upholstered Headboards",
@@ -53,25 +53,27 @@ export function ServicesSection() {
   return (
     <section
       id="services"
-      className="py-20 lg:py-32 bg-gradient-to-b from-background-cream to-white"
+      className="relative py-24 lg:py-32 bg-neutral-950 text-neutral-100"
     >
-      <Container>
+      <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_15%_20%,rgba(255,255,255,0.08),transparent_60%)]" />
+      <Container className="relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-soft">
-            <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-            <span className="text-sm font-semibold text-primary-600 uppercase tracking-wide">
-              Our Services
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-800 bg-neutral-900/60 shadow-soft backdrop-blur">
+            <div className="w-2 h-2 rounded-full bg-accent-gold" />
+            <span className="text-xs font-semibold text-neutral-300 uppercase tracking-[0.2em] font-[var(--nav-font-sans)]">
+              Layanan Kami
             </span>
           </div>
 
-          <h2 className="font-serif text-4xl lg:text-5xl font-bold text-neutral-900">
-            Premium Furniture Solutions
+          <h2 className="font-[var(--nav-font-display)] text-4xl lg:text-5xl font-semibold text-neutral-100">
+            Solusi Furniture
+            <span className="text-accent-gold"> Premium</span>
           </h2>
 
-          <p className="text-lg text-neutral-600">
-            Expertly crafted to match your lifestyle and elevate your living
-            spaces
+          <p className="text-lg text-neutral-400 font-[var(--nav-font-sans)]">
+            Dirancang khusus untuk gaya hidup modern Anda—fungsional, estetis,
+            dan tahan lama
           </p>
         </div>
 
@@ -80,7 +82,7 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <div
               key={service.slug}
-              className="group relative bg-white rounded-4xl overflow-hidden shadow-soft hover:shadow-premium transition-all duration-500 hover:-translate-y-2"
+              className="group relative rounded-4xl overflow-hidden border border-neutral-800 bg-neutral-900/70 shadow-soft hover:shadow-premium transition-all duration-500 hover:-translate-y-2"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -93,18 +95,17 @@ export function ServicesSection() {
                 />
 
                 {/* Gradient Overlay */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-t ${service.accent} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
-                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent-gold/30 to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
               </div>
 
               {/* Content */}
               <div className="p-8 space-y-6">
                 <div className="space-y-3">
-                  <h3 className="font-serif text-2xl font-bold text-neutral-900 group-hover:text-primary-500 transition-colors">
+                  <h3 className="font-[var(--nav-font-display)] text-2xl font-semibold text-neutral-100 group-hover:text-accent-gold transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-neutral-600 leading-relaxed">
+                  <p className="text-neutral-400 leading-relaxed font-[var(--nav-font-sans)]">
                     {service.description}
                   </p>
                 </div>
@@ -114,9 +115,9 @@ export function ServicesSection() {
                   {service.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="flex items-center gap-2 text-sm text-neutral-700"
+                      className="flex items-center gap-2 text-sm text-neutral-300 font-[var(--nav-font-sans)]"
                     >
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
                       {feature}
                     </li>
                   ))}
@@ -126,7 +127,7 @@ export function ServicesSection() {
                 <Link href={`/projects?category=${service.slug}`}>
                   <Button
                     variant="ghost"
-                    className="group/btn w-full justify-between"
+                    className="group/btn w-full justify-between border border-neutral-800 bg-neutral-950/60 text-neutral-200 hover:bg-neutral-800"
                   >
                     View Projects
                     <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -135,8 +136,8 @@ export function ServicesSection() {
               </div>
 
               {/* Index Number (Design Element) */}
-              <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-soft flex items-center justify-center">
-                <span className="font-serif text-lg font-bold text-primary-500">
+              <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-neutral-900/80 border border-neutral-700 shadow-soft flex items-center justify-center">
+                <span className="font-[var(--nav-font-display)] text-lg font-semibold text-accent-gold">
                   0{index + 1}
                 </span>
               </div>

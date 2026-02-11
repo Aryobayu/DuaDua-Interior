@@ -35,16 +35,14 @@ export function HeroSection() {
             {/* Main Heading */}
             <div className="space-y-4">
               <h1 className="font-[var(--nav-font-display)] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight text-neutral-900 leading-[1.05]">
-                Transform Your Space with
-                <span className="block text-neutral-700 mt-2">
-                  Timeless Elegance
-                </span>
+                Wujudkan Ruangan
+                <span className="block text-neutral-700 mt-2">Impian Anda</span>
               </h1>
 
               <p className="font-[var(--nav-font-sans)] text-lg lg:text-xl text-neutral-700/80 max-w-xl leading-relaxed">
-                Premium custom furniture crafted with precision. From elegant
-                wardrobes to stunning kitchen sets—we bring your interior dreams
-                to life.
+                Furniture custom premium yang dirancang khusus untuk gaya hidup
+                Anda. Dari lemari minimalis hingga kitchen set modern—kami
+                hadirkan interior yang sempurna untuk rumah Anda.
               </p>
             </div>
 
@@ -56,7 +54,7 @@ export function HeroSection() {
                 onClick={scrollToPortfolio}
                 className="group bg-neutral-900 text-white hover:bg-neutral-800 shadow-soft-lg"
               >
-                Explore Portfolio
+                Jelajahi Portfolio
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
 
@@ -66,7 +64,7 @@ export function HeroSection() {
                 onClick={scrollToContact}
                 className="border-neutral-400 text-neutral-800 hover:bg-white/60"
               >
-                Get Free Consultation
+                Dapatkan Konsultasi Gratis
               </Button>
             </div>
           </div>
