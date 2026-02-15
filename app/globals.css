@@ -13,8 +13,97 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-manrope);
   --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  --color-primary-50: #faf7f4;
+  --color-primary-100: #f5ede5;
+  --color-primary-200: #e8d9c8;
+  --color-primary-300: #d9c0a3;
+  --color-primary-400: #c89f6d;
+  --color-primary-500: #b8844d;
+  --color-primary-600: #a56d3a;
+  --color-primary-700: #8a5730;
+  --color-primary-800: #71472b;
+  --color-primary-900: #5d3b25;
+  --color-primary-950: #331f14;
+
+  --color-accent-gold: #d4af37;
+  --color-accent-copper: #b87333;
+  --color-accent-rose: #e5c5b5;
+
+  --color-success-light: #86a789;
+  --color-success: #6b8f71;
+  --color-success-dark: #52725b;
+
+  --color-background-light: #ffffff;
+  --color-background-cream: #faf7f4;
+  --color-background-beige: #f5ede5;
+  --color-background-dark: #1a1a1a;
+
+  --shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.04);
+  --shadow-soft-lg: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-soft-xl: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --shadow-premium: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+  --animate-fade-in: fadeIn 0.6s ease-in-out;
+  --animate-slide-up: slideUp 0.6s ease-out;
+  --animate-slide-down: slideDown 0.6s ease-out;
+  --animate-blob: blob 7s infinite;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @media (prefers-color-scheme: dark) {

@@ -29,7 +29,7 @@ export function HeroSection() {
           <div className="space-y-8 animate-slide-up">
             <div className="inline-flex items-center gap-2 rounded-full border border-neutral-300/70 bg-white/60 px-4 py-2 text-xs font-medium text-neutral-700 shadow-soft backdrop-blur font-[var(--nav-font-sans)]">
               <span className="h-2 w-2 rounded-full bg-neutral-900/80" />
-              Premium Interior Studio
+              Studio Interior Premium
             </div>
 
             {/* Main Heading */}
@@ -81,7 +81,7 @@ export function HeroSection() {
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-neutral-900/10 flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-success-DEFAULT"
+                    className="w-6 h-6 text-success"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -99,7 +99,7 @@ export function HeroSection() {
                     Premium
                   </div>
                   <div className="text-sm text-neutral-600 font-[var(--nav-font-sans)]">
-                    Quality Guaranteed
+                    Kualitas Terjamin
                   </div>
                 </div>
               </div>

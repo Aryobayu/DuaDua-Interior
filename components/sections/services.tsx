@@ -16,7 +16,6 @@ const services = [
       "Finishing premium anti gores",
     ],
     image: "/images/services/wardrobe.jpg",
-    accent: "from-primary-500 to-primary-600",
   },
   {
     title: "Bedroom Set",
@@ -24,27 +23,25 @@ const services = [
     description:
       "Paket lengkap kamar tidur termasuk bed frame, nakas, dan meja rias untuk kenyamanan maksimal",
     features: [
-      "Platform Beds dengan Storage",
-      "Storage Solutions",
-      "Matching Nightstands",
-      "Upholstered Headboards",
+      "Rangka tempat tidur dengan storage",
+      "Solusi penyimpanan terintegrasi",
+      "Nakas serasi",
+      "Headboard upholstered premium",
     ],
     image: "/images/services/bedroom.jpg",
-    accent: "from-accent-copper to-primary-500",
   },
   {
     title: "Kitchen Set",
     slug: "kitchen",
     description:
-      "Functional and beautiful kitchen cabinetry with modern design and smart storage solutions",
+      "Kitchen set fungsional dengan desain modern dan solusi penyimpanan cerdas untuk kebutuhan harian",
     features: [
-      "Modular Cabinets",
-      "Soft-Close Systems",
-      "Island Designs",
-      "Countertop Integration",
+      "Kabinet modular",
+      "Sistem soft-close",
+      "Desain island dapur",
+      "Integrasi countertop",
     ],
     image: "/images/services/kitchen-set.jpg",
-    accent: "from-neutral-700 to-neutral-800",
   },
 ];
 
@@ -128,7 +125,7 @@ export function ServicesSection() {
                   aria-label={`Lihat proyek untuk kategori ${service.title}`}
                   className="group/btn inline-flex w-full items-center justify-between rounded-full border border-neutral-800 bg-neutral-950/60 px-6 py-3 text-base font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
                 >
-                  <span>View Projects</span>
+                  <span>Lihat Proyek</span>
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
