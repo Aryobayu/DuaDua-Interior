@@ -25,6 +25,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://duaduainterior.com",
+  ),
   title: {
     default: BRAND_META.defaultTitle,
     template: BRAND_META.titleTemplate,

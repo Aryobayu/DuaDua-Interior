@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/sections/footer";
 import { Navigation } from "@/components/sections/navigation";
 import { Container } from "@/components/ui/container";
+import { getAllProjects } from "@/features/projects/repository";
+import { BRAND } from "@/lib/brand";
+import { CTA_PRIMARY_PILL, CTA_SECONDARY_PILL } from "@/lib/ui-patterns";
 import {
   PROJECT_CATEGORY_LABELS,
   getProjectBySlug,
@@ -15,22 +19,46 @@ type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export async function generateMetadata({
+  params,
+}: ProjectDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const projects = await getAllProjects();
+  const project = getProjectBySlug(slug, projects);
+
+  if (!project) {
+    return {
+      title: "Project Tidak Ditemukan",
+      description:
+        "Project yang Anda cari tidak ditemukan. Jelajahi project lain di DuaDuaInterior.",
+    };
+  }
+
+  return {
+    title: `${project.title} | Project`,
+    description: project.description,
+    openGraph: {
+      title: `${project.title} | ${BRAND.name}`,
+      description: project.description,
+      images: project.image ? [{ url: project.image }] : undefined,
+      type: "article",
+    },
+  };
+}
+
 export default async function ProjectDetailPage({
   params,
 }: ProjectDetailPageProps) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const projects = await getAllProjects();
+  const project = getProjectBySlug(slug, projects);
 
   if (!project) {
     notFound();
   }
 
-  const relatedProjects = getRelatedProjects(project, 3);
+  const relatedProjects = getRelatedProjects(project, 3, projects);
   const categoryHref = `/projects?category=${project.category}`;
-  const secondaryPill =
-    "inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900/60 px-5 py-2.5 text-sm font-semibold text-neutral-200 transition-all duration-300 hover:border-neutral-500 hover:bg-neutral-800/90 active:bg-neutral-800 active:border-neutral-400 font-[var(--nav-font-sans)]";
-  const primaryCta =
-    "group inline-flex items-center gap-2 rounded-full border border-neutral-300/80 bg-neutral-200 px-5 py-2.5 text-sm font-semibold text-neutral-950 shadow-[0_12px_28px_rgba(0,0,0,0.35)] transition-all duration-300 hover:bg-white hover:border-neutral-200 hover:shadow-[0_16px_36px_rgba(0,0,0,0.35)] active:translate-y-px focus-visible:ring-2 focus-visible:ring-neutral-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 font-[var(--nav-font-sans)]";
 
   return (
     <>
@@ -128,14 +156,14 @@ export default async function ProjectDetailPage({
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href={categoryHref}
-                className={secondaryPill}
+                className={CTA_SECONDARY_PILL}
               >
                 Lihat kategori {PROJECT_CATEGORY_LABELS[project.category]}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/#contact"
-                className={primaryCta}
+                className={CTA_PRIMARY_PILL}
               >
                 Konsultasikan kebutuhan Anda
                 <ArrowUpRight className="h-4 w-4 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />

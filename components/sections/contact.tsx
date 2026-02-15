@@ -4,6 +4,7 @@ import { type ChangeEvent, type FormEvent, useMemo, useState } from "react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, Send, MessageCircle } from "lucide-react";
+import { LeadRequest } from "@/lib/types/lead";
 import { BRAND, getWhatsAppUrl } from "@/lib/brand";
 
 type ContactFormState = {
@@ -21,6 +22,8 @@ const initialFormData: ContactFormState = {
   service: "Lemari & Wardrobe",
   message: "",
 };
+
+type SubmitState = "idle" | "submitting" | "success" | "fallback";
 
 const serviceOptions = [
   "Lemari & Wardrobe",
@@ -53,15 +56,17 @@ const contactInfo = [
 
 export function ContactSection() {
   const [formData, setFormData] = useState(initialFormData);
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [submitMessage, setSubmitMessage] = useState("");
 
   const whatsappMessage = useMemo(
     () => `Halo ${BRAND.name}! Saya tertarik dengan ${formData.service}. 
 
-Name: ${formData.name}
+Nama: ${formData.name}
 Email: ${formData.email}
-Phone: ${formData.phone}
+Telepon: ${formData.phone}
 
-Message: ${formData.message}`,
+Pesan: ${formData.message}`,
     [formData],
   );
 
@@ -71,15 +76,94 @@ Message: ${formData.message}`,
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     ) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+      if (submitState !== "idle") {
+        setSubmitState("idle");
+        setSubmitMessage("");
+      }
     };
 
   const handleWhatsApp = () => {
     window.open(getWhatsAppUrl(whatsappMessage), "_blank", "noopener,noreferrer");
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const getUtmParams = (): LeadRequest["utm"] => {
+    if (typeof window === "undefined") return undefined;
+
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get("utm_source") ?? undefined;
+    const medium = params.get("utm_medium") ?? undefined;
+    const campaign = params.get("utm_campaign") ?? undefined;
+    const term = params.get("utm_term") ?? undefined;
+    const content = params.get("utm_content") ?? undefined;
+
+    if (!source && !medium && !campaign && !term && !content) {
+      return undefined;
+    }
+
+    return {
+      source,
+      medium,
+      campaign,
+      term,
+      content,
+    };
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    handleWhatsApp();
+
+    if (submitState === "submitting") return;
+
+    setSubmitState("submitting");
+    setSubmitMessage("");
+
+    const honeypotValue = (
+      new FormData(e.currentTarget as HTMLFormElement).get("companyWebsite") ??
+      ""
+    )
+      .toString()
+      .trim();
+
+    const payload: LeadRequest = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      service: formData.service,
+      message: formData.message,
+      sourcePage:
+        typeof window !== "undefined"
+          ? `${window.location.pathname}#contact`
+          : "/#contact",
+      consent: true,
+      utm: getUtmParams(),
+      companyWebsite: honeypotValue,
+    };
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Lead API failed");
+      }
+
+      setSubmitState("success");
+      setSubmitMessage(
+        "Terima kasih, data Anda berhasil kami terima. Tim kami akan menghubungi Anda segera.",
+      );
+      setFormData(initialFormData);
+    } catch {
+      setSubmitState("fallback");
+      setSubmitMessage(
+        "Sistem sedang sibuk. Kami membuka WhatsApp agar konsultasi tetap berjalan.",
+      );
+      handleWhatsApp();
+    }
   };
 
   return (
@@ -149,7 +233,7 @@ Message: ${formData.message}`,
                 </div>
               </div>
               <Button
-                className="w-full bg-success-light hover:bg-success-DEFAULT text-white"
+                className="w-full bg-success-light hover:bg-success text-white"
                 onClick={handleWhatsApp}
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
@@ -161,6 +245,15 @@ Message: ${formData.message}`,
           {/* Right - Form */}
           <div className="bg-neutral-50 rounded-4xl p-8 lg:p-10">
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="companyWebsite"
+                autoComplete="off"
+                tabIndex={-1}
+                className="hidden"
+                aria-hidden="true"
+              />
+
               {/* Name */}
               <div>
                 <label
@@ -253,17 +346,31 @@ Message: ${formData.message}`,
                   id="message"
                   rows={4}
                   className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
-                  placeholder="Tell us about your project..."
+                  placeholder="Ceritakan kebutuhan proyek Anda..."
                   value={formData.message}
                   onChange={handleFieldChange("message")}
                 />
               </div>
 
               {/* Submit */}
-              <Button type="submit" size="lg" className="w-full">
-                Kirim via WhatsApp
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full"
+                disabled={submitState === "submitting"}
+              >
+                {submitState === "submitting"
+                  ? "Mengirim Data..."
+                  : "Kirim Permintaan Konsultasi"}
                 <Send className="w-5 h-5 ml-2" />
               </Button>
+
+              <p
+                className="text-xs text-center text-neutral-600"
+                aria-live="polite"
+              >
+                {submitMessage}
+              </p>
 
               <p className="text-xs text-neutral-500 text-center">
                 Dengan mengirim form ini, Anda setuju untuk dihubungi melalui

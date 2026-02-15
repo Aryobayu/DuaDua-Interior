@@ -6,6 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import {
+  CTA_PRIMARY_PILL,
+  FILTER_CHIP_ACTIVE,
+  FILTER_CHIP_BASE,
+  FILTER_CHIP_INACTIVE,
+} from "@/lib/ui-patterns";
 import { cn } from "@/lib/utils";
 import {
   PORTFOLIO_FILTER_TABS,
@@ -13,15 +19,20 @@ import {
   PROJECT_CATEGORY_NARRATIVES,
   ProjectCategory,
   ProjectFilter,
+  ProjectItem,
   getProjectsByFilter,
   normalizeProjectFilter,
 } from "@/lib/projects-data";
 
 type ProjectsPageClientProps = {
   initialCategory: ProjectFilter;
+  projects: ProjectItem[];
 };
 
-export function ProjectsPageClient({ initialCategory }: ProjectsPageClientProps) {
+export function ProjectsPageClient({
+  initialCategory,
+  projects,
+}: ProjectsPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeCategory = useMemo(() => {
@@ -31,8 +42,8 @@ export function ProjectsPageClient({ initialCategory }: ProjectsPageClientProps)
   }, [initialCategory, searchParams]);
 
   const filteredProjects = useMemo(
-    () => getProjectsByFilter(activeCategory),
-    [activeCategory],
+    () => getProjectsByFilter(activeCategory, projects),
+    [activeCategory, projects],
   );
 
   const narrativeRef = useRef<HTMLDivElement | null>(null);
@@ -57,15 +68,6 @@ export function ProjectsPageClient({ initialCategory }: ProjectsPageClientProps)
       prev === null ? height : Math.max(prev, height),
     );
   }, [activeCategory]);
-
-  const filterBase =
-    "rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-300 font-[var(--nav-font-sans)]";
-  const filterActive =
-    "border-accent-gold/70 bg-accent-gold/15 text-accent-gold hover:border-accent-gold/80 hover:bg-accent-gold/25 active:bg-accent-gold/30";
-  const filterInactive =
-    "border-neutral-700 bg-neutral-900/60 text-neutral-200 hover:border-neutral-500 hover:bg-neutral-800/90 active:bg-neutral-800 active:border-neutral-400";
-  const ctaPrimary =
-    "group inline-flex items-center gap-2 rounded-full border border-neutral-300/80 bg-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-950 shadow-[0_12px_28px_rgba(0,0,0,0.35)] transition-all duration-300 hover:bg-white hover:border-neutral-200 hover:shadow-[0_16px_36px_rgba(0,0,0,0.35)] active:translate-y-px focus-visible:ring-2 focus-visible:ring-neutral-200/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 font-[var(--nav-font-sans)]";
 
   const handleTabClick = (value: ProjectFilter) => {
     if (value === activeCategory) return;
@@ -129,7 +131,10 @@ export function ProjectsPageClient({ initialCategory }: ProjectsPageClientProps)
                 type="button"
                 onClick={() => handleTabClick(tab.value)}
                 aria-pressed={active}
-                className={cn(filterBase, active ? filterActive : filterInactive)}
+                className={cn(
+                  FILTER_CHIP_BASE,
+                  active ? FILTER_CHIP_ACTIVE : FILTER_CHIP_INACTIVE,
+                )}
               >
                 {tab.label}
               </button>
@@ -205,7 +210,7 @@ export function ProjectsPageClient({ initialCategory }: ProjectsPageClientProps)
             dan matang secara visual, dengan standar detail yang konsisten dari
             tahap konsep hingga finishing akhir.
           </p>
-          <Link href="/#contact" className={cn("mt-5", ctaPrimary)}>
+          <Link href="/#contact" className={cn("mt-5", CTA_PRIMARY_PILL)}>
             Konsultasikan Proyek Anda
             <ArrowUpRight className="h-4 w-4 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
           </Link>

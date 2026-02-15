@@ -5,28 +5,32 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import {
+  FILTER_CHIP_ACTIVE,
+  FILTER_CHIP_BASE_WIDE,
+  FILTER_CHIP_INACTIVE,
+} from "@/lib/ui-patterns";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import {
   PORTFOLIO_FILTER_TABS,
   PROJECT_CATEGORY_LABELS,
   ProjectFilter,
+  ProjectItem,
   getFeaturedProjectsByFilter,
 } from "@/lib/projects-data";
 
-export function PortfolioSection() {
+type PortfolioSectionProps = {
+  projects: ProjectItem[];
+};
+
+export function PortfolioSection({ projects }: PortfolioSectionProps) {
   const [activeCategory, setActiveCategory] = useState<ProjectFilter>("all");
 
   const filteredItems = useMemo(
-    () => getFeaturedProjectsByFilter(activeCategory),
-    [activeCategory],
+    () => getFeaturedProjectsByFilter(activeCategory, projects),
+    [activeCategory, projects],
   );
-  const filterBase =
-    "min-w-[120px] rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-300 font-[var(--nav-font-sans)]";
-  const filterActive =
-    "border-accent-gold/70 bg-accent-gold/15 text-accent-gold hover:border-accent-gold/80 hover:bg-accent-gold/25 active:bg-accent-gold/30";
-  const filterInactive =
-    "border-neutral-700 bg-neutral-900/60 text-neutral-200 hover:border-neutral-500 hover:bg-neutral-800/90 active:bg-neutral-800 active:border-neutral-400";
 
   return (
     <section
@@ -64,8 +68,10 @@ export function PortfolioSection() {
               size="md"
               onClick={() => setActiveCategory(tab.value)}
               className={cn(
-                filterBase,
-                activeCategory === tab.value ? filterActive : filterInactive,
+                FILTER_CHIP_BASE_WIDE,
+                activeCategory === tab.value
+                  ? FILTER_CHIP_ACTIVE
+                  : FILTER_CHIP_INACTIVE,
               )}
             >
               {tab.label}

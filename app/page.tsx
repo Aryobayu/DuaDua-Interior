@@ -5,8 +5,11 @@ import { ServicesSection } from "@/components/sections/services";
 import { PortfolioSection } from "@/components/sections/portfolio";
 import { ContactSection } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
+import { getAllProjects } from "@/features/projects/repository";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getAllProjects();
+
   return (
     <>
       <Navigation />
@@ -14,7 +17,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ServicesSection />
-        <PortfolioSection />
+        <PortfolioSection projects={projects} />
         <ContactSection />
       </main>
       <Footer />
