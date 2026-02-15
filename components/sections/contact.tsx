@@ -1,54 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { type ChangeEvent, type FormEvent, useMemo, useState } from "react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, Send, MessageCircle } from "lucide-react";
+import { BRAND, getWhatsAppUrl } from "@/lib/brand";
+
+type ContactFormState = {
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  message: string;
+};
+
+const initialFormData: ContactFormState = {
+  name: "",
+  email: "",
+  phone: "",
+  service: "Lemari & Wardrobe",
+  message: "",
+};
+
+const serviceOptions = [
+  "Lemari & Wardrobe",
+  "Set Kamar Tidur",
+  "Kitchen Set",
+  "Paket Lengkap (Semua Ruangan)",
+  "Hanya Konsultasi Dulu",
+] as const;
 
 const contactInfo = [
   {
     icon: Phone,
     label: "Telepon",
-    value: "+62 812-3456-7890",
-    href: "tel:+6281234567890",
+    value: BRAND.phoneDisplay,
+    href: `tel:+${BRAND.phoneDigits}`,
   },
   {
     icon: Mail,
     label: "Email",
-    value: "info@furnicraft.com",
-    href: "mailto:info@furnicraft.com",
+    value: BRAND.email,
+    href: `mailto:${BRAND.email}`,
   },
   {
     icon: MapPin,
     label: "Lokasi",
-    value: "Jakarta, Indonesia",
-    href: "https://maps.google.com",
+    value: BRAND.location,
+    href: BRAND.mapsUrl,
   },
 ];
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "Lemari & Wardrobe",
-    message: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
-  const handleWhatsApp = () => {
-    const message = `Halo DuaDua-Interior! Saya tertarik dengan ${formData.service}. 
+  const whatsappMessage = useMemo(
+    () => `Halo ${BRAND.name}! Saya tertarik dengan ${formData.service}. 
 
 Name: ${formData.name}
 Email: ${formData.email}
 Phone: ${formData.phone}
 
-Message: ${formData.message}`;
+Message: ${formData.message}`,
+    [formData],
+  );
 
-    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+  const handleFieldChange =
+    (field: keyof ContactFormState) =>
+    (
+      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    ) => {
+      setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+    };
+
+  const handleWhatsApp = () => {
+    window.open(getWhatsAppUrl(whatsappMessage), "_blank", "noopener,noreferrer");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     handleWhatsApp();
   };
@@ -68,7 +97,7 @@ Message: ${formData.message}`;
                 </span>
               </div>
 
-              <h2 className="font-serif text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
+              <h2 className="font-[var(--nav-font-display)] text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
                 Wujudkan Interior
                 <span className="block text-primary-500">Impian Anda</span>
               </h2>
@@ -81,10 +110,12 @@ Message: ${formData.message}`;
 
             {/* Contact Info Cards */}
             <div className="space-y-4">
-              {contactInfo.map((info, index) => (
+              {contactInfo.map((info) => (
                 <a
-                  key={index}
+                  key={info.label}
                   href={info.href}
+                  target={info.href.startsWith("http") ? "_blank" : undefined}
+                  rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="flex items-center gap-4 p-4 bg-neutral-50 rounded-2xl hover:bg-primary-50 transition-colors group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-white shadow-soft flex items-center justify-center group-hover:bg-primary-500 transition-colors">
@@ -145,9 +176,7 @@ Message: ${formData.message}`;
                   className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                   placeholder="John Doe"
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={handleFieldChange("name")}
                 />
               </div>
 
@@ -166,9 +195,7 @@ Message: ${formData.message}`;
                   className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                   placeholder="john@example.com"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={handleFieldChange("email")}
                 />
               </div>
 
@@ -185,11 +212,9 @@ Message: ${formData.message}`;
                   id="phone"
                   required
                   className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                  placeholder="+62 812-3456-7890"
+                  placeholder={BRAND.phoneDisplay}
                   value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
+                  onChange={handleFieldChange("phone")}
                 />
               </div>
 
@@ -206,17 +231,13 @@ Message: ${formData.message}`;
                   required
                   className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all appearance-none cursor-pointer"
                   value={formData.service}
-                  onChange={(e) =>
-                    setFormData({ ...formData, service: e.target.value })
-                  }
+                  onChange={handleFieldChange("service")}
                 >
-                  <option value="Lemari & Wardrobe">Lemari & Wardrobe</option>
-                  <option value="Set Kamar Tidur">Set Kamar Tidur</option>
-                  <option value="Kitchen Set">Kitchen Set</option>
-                  <option value="Paket Lengkap">
-                    Paket Lengkap (Semua Ruangan)
-                  </option>
-                  <option value="Konsultasi">Hanya Konsultasi Dulu</option>
+                  {serviceOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -234,9 +255,7 @@ Message: ${formData.message}`;
                   className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
                   placeholder="Tell us about your project..."
                   value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
+                  onChange={handleFieldChange("message")}
                 />
               </div>
 

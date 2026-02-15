@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/container";
 import { Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
+import { BRAND } from "@/lib/brand";
 
 const footerLinks = {
   company: [
@@ -16,8 +17,8 @@ const footerLinks = {
     { label: "Desain Custom", href: "/#contact" },
   ],
   social: [
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: Facebook, href: BRAND.facebookUrl, label: "Facebook" },
+    { icon: Instagram, href: BRAND.instagramUrl, label: "Instagram" },
   ],
 };
 
@@ -29,17 +30,17 @@ export function Footer() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="space-y-6">
-              <div className="font-serif text-3xl font-bold">
-                DuaDuaInterior
+              <div className="font-[var(--nav-font-display)] text-3xl font-bold">
+                {BRAND.name}
               </div>
               <p className="text-neutral-400 leading-relaxed">
                 Mewujudkan interior impian dengan furniture custom premium.
                 Kualitas terbaik, desain timeless, harga kompetitif.
               </p>
               <div className="flex gap-3">
-                {footerLinks.social.map((social, idx) => (
+                {footerLinks.social.map((social) => (
                   <a
-                    key={idx}
+                    key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -56,8 +57,8 @@ export function Footer() {
             <div>
               <h3 className="font-semibold text-lg mb-6">Perusahaan</h3>
               <ul className="space-y-3">
-                {footerLinks.company.map((link, idx) => (
-                  <li key={idx}>
+                {footerLinks.company.map((link) => (
+                  <li key={link.href}>
                     <Link
                       href={link.href}
                       className="text-neutral-400 hover:text-white transition-colors"
@@ -73,8 +74,8 @@ export function Footer() {
             <div>
               <h3 className="font-semibold text-lg mb-6">Layanan</h3>
               <ul className="space-y-3">
-                {footerLinks.services.map((link, idx) => (
-                  <li key={idx}>
+                {footerLinks.services.map((link) => (
+                  <li key={link.href}>
                     <Link
                       href={link.href}
                       className="text-neutral-400 hover:text-white transition-colors"
@@ -92,15 +93,15 @@ export function Footer() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3 text-neutral-400">
                   <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>+62 812-3456-7890</span>
+                  <span>{BRAND.phoneDisplay}</span>
                 </li>
                 <li className="flex items-start gap-3 text-neutral-400">
                   <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>info@furnicraft.com</span>
+                  <span>{BRAND.email}</span>
                 </li>
                 <li className="flex items-start gap-3 text-neutral-400">
                   <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Semarang, Indonesia</span>
+                  <span>{BRAND.location}</span>
                 </li>
               </ul>
             </div>
@@ -110,7 +111,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-400">
-            <p>© 2026 DuaDuaInterior. Seluruh hak cipta dilindungi.</p>
+            <p>© 2026 {BRAND.name}. Seluruh hak cipta dilindungi.</p>
             <div className="flex gap-6">
               <Link
                 href="/privacy"
