@@ -42,11 +42,25 @@ npm run start
 - `npm run build` - production build
 - `npm run start` - start production server
 - `npm run lint` - run lint checks
+- `npm run test` - run unit tests
+- `npm run payload` - run Payload CLI
+- `npm run payload:generate:types` - regenerate Payload types
+- `npm run payload:generate:importmap` - regenerate Payload admin import map
+
+## CMS Admin
+
+- Dashboard URL: `/admin`
+- API URL base: `/api/*`
+- Collection login: `users`
+- Setup detail: `docs/cms-admin-foundation.md`
+
+Copy `.env.example` to `.env.local` before running locally.
 
 ## Project Structure
 
 - `app/` - Next.js routes and layout
 - `components/sections/` - page sections (hero, about, services, contact, footer)
 - `components/ui/` - reusable UI primitives
+- `payload/` - Payload collections and CMS domain configuration
 - `lib/` - shared utilities
 - `public/` - static assets
