@@ -15,6 +15,7 @@ const navLinks = [
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const mobileMenuId = "mobile-navigation-panel";
 
   return (
     <nav className="fixed top-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-xl -translate-x-1/2">
@@ -22,6 +23,7 @@ export function Navigation() {
         {/* Logo */}
         <Link
           href="/"
+          aria-label="Beranda DuaDuaInterior"
           className="flex items-center gap-2 font-[var(--nav-font-display)] text-lg font-semibold text-neutral-900 transition-colors hover:text-neutral-900"
         >
           <span className="font-light tracking-wide hidden sm:inline">
@@ -66,9 +68,12 @@ export function Navigation() {
 
         {/* Mobile Menu Button */}
         <button
+          type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="lg:hidden rounded-full border border-neutral-200/70 bg-white/70 p-2 text-neutral-700 shadow-soft transition-all duration-300 hover:text-neutral-900 hover:shadow-soft-lg"
           aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
+          aria-controls={mobileMenuId}
         >
           {isMobileMenuOpen ? (
             <X className="w-6 h-6" />
@@ -80,7 +85,7 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden">
+        <div id={mobileMenuId} className="lg:hidden">
           <div className="mt-3 rounded-3xl border border-neutral-200/70 bg-white/90 p-4 backdrop-blur-xl shadow-soft-lg animate-slide-down font-[var(--nav-font-sans)] text-neutral-800">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (

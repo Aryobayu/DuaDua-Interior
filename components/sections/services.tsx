@@ -1,5 +1,4 @@
 import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -124,14 +123,13 @@ export function ServicesSection() {
                 </ul>
 
                 {/* CTA */}
-                <Link href={`/projects?category=${service.slug}`}>
-                  <Button
-                    variant="ghost"
-                    className="group/btn w-full justify-between border border-neutral-800 bg-neutral-950/60 text-neutral-200 hover:bg-neutral-800"
-                  >
-                    View Projects
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
+                <Link
+                  href={`/projects?category=${service.slug}`}
+                  aria-label={`Lihat proyek untuk kategori ${service.title}`}
+                  className="group/btn inline-flex w-full items-center justify-between rounded-full border border-neutral-800 bg-neutral-950/60 px-6 py-3 text-base font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
+                >
+                  <span>View Projects</span>
+                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
