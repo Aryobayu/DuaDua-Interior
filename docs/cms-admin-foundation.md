@@ -24,9 +24,12 @@ Gunakan PostgreSQL untuk `DATABASE_URI`:
 ## Setup Lokal
 
 1. Install dependency: `npm install`
-2. Jalankan server: `npm run dev`
-3. Buka `http://localhost:3000/admin`
-4. Buat akun admin pertama pada layar bootstrap Payload
+2. Jalankan PostgreSQL lokal: `npm run db:up`
+3. Jalankan server: `npm run dev`
+4. Buka `http://localhost:3000/admin`
+5. Buat akun admin pertama pada layar bootstrap Payload
+
+Panduan detail lokal vs managed ada di `docs/postgresql-setup.md`.
 
 ## Catatan Integrasi
 

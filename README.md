@@ -4,11 +4,13 @@ Marketing website for an interior design and custom furniture studio.
 
 ## Tech Stack
 
-- Next.js 16 (App Router)
+- Next.js 15 (App Router)
 - React 19
 - TypeScript
 - Tailwind CSS 4
 - Lucide icons
+- Payload CMS 3
+- PostgreSQL
 
 ## Getting Started
 
@@ -46,6 +48,10 @@ npm run start
 - `npm run payload` - run Payload CLI
 - `npm run payload:generate:types` - regenerate Payload types
 - `npm run payload:generate:importmap` - regenerate Payload admin import map
+- `npm run db:up` - start local PostgreSQL via Docker
+- `npm run db:down` - stop local PostgreSQL containers
+- `npm run db:logs` - view PostgreSQL logs
+- `npm run db:psql` - open psql shell to local PostgreSQL
 
 ## CMS Admin
 
@@ -54,6 +60,7 @@ npm run start
 - Collection login: `users`
 - Database target: PostgreSQL (`DATABASE_URI`)
 - Setup detail: `docs/cms-admin-foundation.md`
+- Database setup guide: `docs/postgresql-setup.md`
 
 Copy `.env.example` to `.env.local` before running locally.
 
