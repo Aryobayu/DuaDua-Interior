@@ -52,6 +52,7 @@ npm run start
 - Dashboard URL: `/admin`
 - API URL base: `/api/*`
 - Collection login: `users`
+- Database target: PostgreSQL (`DATABASE_URI`)
 - Setup detail: `docs/cms-admin-foundation.md`
 
 Copy `.env.example` to `.env.local` before running locally.
