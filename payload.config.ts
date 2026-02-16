@@ -1,9 +1,10 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
 import sharp from "sharp";
+import { Leads } from "./payload/collections/Leads";
 import { Media } from "./payload/collections/Media";
 import { Projects } from "./payload/collections/Projects";
 import { Users } from "./payload/collections/Users";
@@ -20,12 +21,14 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Projects],
+  collections: [Users, Media, Projects, Leads],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "local-dev-payload-secret",
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || "file:./.payload/data.db",
+  db: postgresAdapter({
+    pool: {
+      connectionString:
+        process.env.DATABASE_URI ||
+        "postgresql://postgres:postgres@127.0.0.1:5432/duaduainterior",
     },
   }),
   sharp,

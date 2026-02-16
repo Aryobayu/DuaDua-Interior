@@ -23,10 +23,3 @@ export type LeadResponse = {
   status: "accepted" | "ignored_honeypot";
   createdAt: string;
 };
-
-export type StoredLead = {
-  id: string;
-  createdAt: string;
-  ipAddress: string;
-  payload: Omit<LeadRequest, "companyWebsite">;
-};

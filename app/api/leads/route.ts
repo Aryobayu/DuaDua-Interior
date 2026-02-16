@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { StoredLead } from "@/lib/types/lead";
+import { getPayload } from "payload";
+import config from "@payload-config";
 import { leadRequestSchema } from "@/lib/validation/lead";
 
 const WINDOW_MS = 60_000;
@@ -12,8 +13,6 @@ const rateLimitStore = new Map<
     resetAt: number;
   }
 >();
-
-const leadStore: StoredLead[] = [];
 
 const getClientIp = (request: NextRequest): string => {
   const forwardedFor = request.headers.get("x-forwarded-for");
@@ -44,6 +43,16 @@ const isRateLimited = (ipAddress: string): boolean => {
   current.count += 1;
   rateLimitStore.set(ipAddress, current);
   return false;
+};
+
+let payloadClientPromise: ReturnType<typeof getPayload> | null = null;
+
+const getPayloadClient = () => {
+  if (!payloadClientPromise) {
+    payloadClientPromise = getPayload({ config });
+  }
+
+  return payloadClientPromise;
 };
 
 export async function POST(request: NextRequest) {
@@ -95,33 +104,40 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const id = crypto.randomUUID();
-  const createdAt = new Date().toISOString();
+  try {
+    const payload = await getPayloadClient();
 
-  const lead: StoredLead = {
-    id,
-    createdAt,
-    ipAddress,
-    payload: {
-      name: requestData.name,
-      email: requestData.email,
-      phone: requestData.phone,
-      service: requestData.service,
-      message: requestData.message,
-      sourcePage: requestData.sourcePage,
-      consent: requestData.consent,
-      utm: requestData.utm,
-    },
-  };
+    const createdLead = await payload.create({
+      collection: "leads",
+      data: {
+        name: requestData.name,
+        email: requestData.email,
+        phone: requestData.phone,
+        service: requestData.service,
+        message: requestData.message,
+        sourcePage: requestData.sourcePage,
+        consent: requestData.consent,
+        utm: requestData.utm,
+        ipAddress,
+        status: "new",
+      },
+    });
 
-  leadStore.push(lead);
-
-  return NextResponse.json(
-    {
-      id,
-      status: "accepted",
-      createdAt,
-    },
-    { status: 201 },
-  );
+    return NextResponse.json(
+      {
+        id: String(createdLead.id),
+        status: "accepted",
+        createdAt: createdLead.createdAt,
+      },
+      { status: 201 },
+    );
+  } catch {
+    return NextResponse.json(
+      {
+        message:
+          "Sistem lead sedang bermasalah sementara. Silakan lanjutkan lewat WhatsApp.",
+      },
+      { status: 503 },
+    );
+  }
 }
