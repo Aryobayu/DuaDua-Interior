@@ -26,6 +26,9 @@ export function Navigation() {
           aria-label="Beranda DuaDuaInterior"
           className="flex items-center gap-2 font-[var(--nav-font-display)] text-lg font-semibold text-neutral-900 transition-colors hover:text-neutral-900"
         >
+          <span className="h-7 w-7 rounded-full bg-neutral-900 flex items-center justify-center sm:hidden">
+            <span className="text-white text-xs font-bold">DD</span>
+          </span>
           <span className="font-light tracking-wide hidden sm:inline">
             DuaDua<span className="font-semibold">Interior</span>
           </span>

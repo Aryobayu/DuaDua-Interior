@@ -1,27 +1,14 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export function HeroSection() {
-  const scrollToPortfolio = () => {
-    document.getElementById("portfolio")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-[linear-gradient(90deg,#e7e3de_0%,#d9d5cf_40%,#b8b4af_70%,#7a7775_100%)]">
       {/* Soft highlight + right-side depth */}
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_15%_20%,rgba(255,255,255,0.7),transparent_60%)]" />
-      <div className="absolute inset-y-0 right-0 w-1/2 bg-[linear-gradient(180deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.55)_100%)]" />
+      <div className="absolute inset-y-0 right-0 w-1/2 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.4)_100%)]" />
 
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center py-24 lg:py-28">
@@ -48,32 +35,39 @@ export function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <Button
+              <LinkButton
+                href="#portfolio"
                 size="lg"
                 variant="primary"
-                onClick={scrollToPortfolio}
                 className="group bg-neutral-900 text-white hover:bg-neutral-800 shadow-soft-lg"
               >
                 Jelajahi Portfolio
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              </LinkButton>
 
-              <Button
+              <LinkButton
+                href="#contact"
                 size="lg"
                 variant="outline"
-                onClick={scrollToContact}
                 className="border-neutral-400 text-neutral-800 hover:bg-white/60"
               >
                 Dapatkan Konsultasi Gratis
-              </Button>
+              </LinkButton>
             </div>
           </div>
 
           {/* Right Visual Panel */}
           <div className="relative animate-slide-up">
-            <div className="relative aspect-[4/5] rounded-4xl overflow-hidden shadow-premium border border-white/15 bg-[linear-gradient(135deg,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.35)_100%)]">
-              <div className="absolute inset-0 bg-[radial-gradient(65%_65%_at_20%_15%,rgba(255,255,255,0.18),transparent_60%)]" />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,transparent_45%,rgba(0,0,0,0.35)_100%)]" />
+            <div className="relative aspect-[4/5] rounded-4xl overflow-hidden shadow-premium border border-white/15">
+              <Image
+                src="/images/projects/bedroom/bedroom-01.jpg"
+                alt="Desain interior kamar tidur premium oleh DuaDuaInterior"
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 via-transparent to-transparent" />
             </div>
 
             {/* Floating Card - Quality Badge */}

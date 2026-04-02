@@ -1,19 +1,65 @@
 import { Footer } from "@/components/sections/footer";
 import { Navigation } from "@/components/sections/navigation";
 import { Container } from "@/components/ui/container";
+import { BeforeAfterSlider } from "@/components/ui/before-after-slider";
+import { GalleryLightbox } from "@/components/ui/gallery-lightbox";
 import {
   PROJECT_CATEGORY_LABELS,
   getProjectBySlug,
   getRelatedProjects,
+  PROJECTS,
 } from "@/lib/projects-data";
+import { BRAND } from "@/lib/brand";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: ProjectDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+
+  if (!project) {
+    return {
+      title: "Proyek Tidak Ditemukan",
+    };
+  }
+
+  const title = `${project.title} | ${BRAND.name}`;
+  const description = project.teaser;
+  const imageUrl = project.image;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
+  };
+}
 
 export default async function ProjectDetailPage({
   params,
@@ -141,6 +187,41 @@ export default async function ProjectDetailPage({
                 <ArrowUpRight className="h-4 w-4 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
               </Link>
             </div>
+          </section>
+
+          {/* Before/After Comparison */}
+          <section className="mt-10">
+            <h2 className="font-[var(--nav-font-display)] text-2xl text-white mb-5">
+              Transformasi Ruang
+            </h2>
+            <div className="max-w-2xl">
+              <BeforeAfterSlider
+                beforeSrc={project.image}
+                afterSrc={relatedProjects[0]?.image || project.image}
+                beforeAlt={`${project.title} - Sebelum`}
+                afterAlt={`${project.title} - Sesudah`}
+                beforeLabel="Konsep Awal"
+                afterLabel="Hasil Akhir"
+              />
+            </div>
+            <p className="mt-3 text-sm text-neutral-400 font-[var(--nav-font-sans)]">
+              Geser untuk melihat perbandingan konsep awal dan hasil akhir pengerjaan.
+            </p>
+          </section>
+
+          {/* Gallery */}
+          <section className="mt-10">
+            <h2 className="font-[var(--nav-font-display)] text-2xl text-white mb-5">
+              Galeri Proyek
+            </h2>
+            <GalleryLightbox
+              images={PROJECTS.filter(
+                (p) => p.category === project.category && p.slug !== project.slug,
+              )
+                .slice(0, 3)
+                .map((p) => ({ src: p.image, alt: p.title }))}
+              className="max-w-2xl"
+            />
           </section>
 
           {relatedProjects.length > 0 ? (

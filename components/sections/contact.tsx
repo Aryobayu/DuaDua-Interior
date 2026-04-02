@@ -14,6 +14,8 @@ type ContactFormState = {
   message: string;
 };
 
+type FormErrors = Partial<Record<keyof ContactFormState, string>>;
+
 const initialFormData: ContactFormState = {
   name: "",
   email: "",
@@ -51,8 +53,12 @@ const contactInfo = [
   },
 ];
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[\d\s\-\+\(\)]{8,15}$/;
+
 export function ContactSection() {
   const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const whatsappMessage = useMemo(
     () => `Halo ${BRAND.name}! Saya tertarik dengan ${formData.service}. 
@@ -65,12 +71,38 @@ Message: ${formData.message}`,
     [formData],
   );
 
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Nama wajib diisi";
+    }
+
+    if (!EMAIL_REGEX.test(formData.email)) {
+      newErrors.email = "Format email tidak valid";
+    }
+
+    if (!PHONE_REGEX.test(formData.phone)) {
+      newErrors.phone = "Format nomor telepon tidak valid (min. 8 digit)";
+    }
+
+    if (formData.message.length > 0 && formData.message.length < 10) {
+      newErrors.message = "Pesan minimal 10 karakter";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleFieldChange =
     (field: keyof ContactFormState) =>
     (
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     ) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+      if (errors[field]) {
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
     };
 
   const handleWhatsApp = () => {
@@ -79,8 +111,14 @@ Message: ${formData.message}`,
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    handleWhatsApp();
+    if (validate()) {
+      handleWhatsApp();
+    }
   };
+
+  const inputBase = "w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all";
+  const inputNormal = "border-neutral-200";
+  const inputError = "border-red-400 focus:ring-red-400";
 
   return (
     <section id="contact" className="py-20 lg:py-32 bg-white">
@@ -173,11 +211,14 @@ Message: ${formData.message}`,
                   type="text"
                   id="name"
                   required
-                  className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                  placeholder="John Doe"
+                  aria-describedby={errors.name ? "name-error" : undefined}
+                  aria-invalid={errors.name ? true : undefined}
+                  className={`${inputBase} ${errors.name ? inputError : inputNormal}`}
+                  placeholder="Nama lengkap Anda"
                   value={formData.name}
                   onChange={handleFieldChange("name")}
                 />
+                {errors.name && <p id="name-error" className="mt-1 text-sm text-red-500" role="alert">{errors.name}</p>}
               </div>
 
               {/* Email */}
@@ -192,11 +233,14 @@ Message: ${formData.message}`,
                   type="email"
                   id="email"
                   required
-                  className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                  placeholder="john@example.com"
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                  aria-invalid={errors.email ? true : undefined}
+                  className={`${inputBase} ${errors.email ? inputError : inputNormal}`}
+                  placeholder="nama@email.com"
                   value={formData.email}
                   onChange={handleFieldChange("email")}
                 />
+                {errors.email && <p id="email-error" className="mt-1 text-sm text-red-500" role="alert">{errors.email}</p>}
               </div>
 
               {/* Phone */}
@@ -211,11 +255,14 @@ Message: ${formData.message}`,
                   type="tel"
                   id="phone"
                   required
-                  className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                  aria-describedby={errors.phone ? "phone-error" : undefined}
+                  aria-invalid={errors.phone ? true : undefined}
+                  className={`${inputBase} ${errors.phone ? inputError : inputNormal}`}
                   placeholder={BRAND.phoneDisplay}
                   value={formData.phone}
                   onChange={handleFieldChange("phone")}
                 />
+                {errors.phone && <p id="phone-error" className="mt-1 text-sm text-red-500" role="alert">{errors.phone}</p>}
               </div>
 
               {/* Service */}
@@ -252,11 +299,14 @@ Message: ${formData.message}`,
                 <textarea
                   id="message"
                   rows={4}
-                  className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
-                  placeholder="Tell us about your project..."
+                  aria-describedby={errors.message ? "message-error" : undefined}
+                  aria-invalid={errors.message ? true : undefined}
+                  className={`${inputBase} ${errors.message ? inputError : inputNormal} resize-none`}
+                  placeholder="Ceritakan tentang proyek Anda..."
                   value={formData.message}
                   onChange={handleFieldChange("message")}
                 />
+                {errors.message && <p id="message-error" className="mt-1 text-sm text-red-500" role="alert">{errors.message}</p>}
               </div>
 
               {/* Submit */}

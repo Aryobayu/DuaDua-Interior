@@ -45,8 +45,9 @@ export function AboutSection() {
             <div className="relative aspect-[4/5] rounded-4xl overflow-hidden shadow-soft-xl border border-white/70">
               <Image
                 src="/images/about/workshop.jpg"
-                alt="Our Workshop and Craftsmanship"
+                alt="Workshop dan Keahlian Craftsman DuaDuaInterior"
                 fill
+                priority
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
@@ -54,13 +55,13 @@ export function AboutSection() {
             </div>
 
             {/* Small Overlay Image */}
-            <div className="absolute -bottom-8 -right-8 w-64 h-64 rounded-3xl overflow-hidden shadow-premium border border-white/80 bg-white/80 backdrop-blur">
+            <div className="absolute -bottom-8 -right-8 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-3xl overflow-hidden shadow-premium border border-white/80 bg-white/80 backdrop-blur">
               <Image
                 src="/images/about/team.jpg"
                 alt="Our Expert Team"
                 fill
                 className="object-cover"
-                sizes="256px"
+                sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 256px"
               />
             </div>
           </div>
