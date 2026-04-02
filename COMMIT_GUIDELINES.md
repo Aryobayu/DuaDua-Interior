@@ -32,7 +32,10 @@ Contoh:
 ## Aturan Scope
 Gunakan scope yang stabil dan dekat dengan domain kode:
 - `projects`, `home`, `navigation`, `services`, `portfolio`, `about`, `footer`
-- `assets`, `workflow`, `build`, `lint`, `fonts`
+- `contact`, `hero`, `faq`, `quote`, `materials`
+- `lightbox`, `slider`, `fab`, `scroll-reveal`
+- `assets`, `workflow`, `build`, `lint`, `fonts`, `tests`
+- `seo`, `accessibility`, `performance`
 
 Jika satu commit menyentuh dua domain berbeda, pecah menjadi beberapa commit.
 
