@@ -5,7 +5,7 @@
   --foreground: #171717;
   --font-body: var(--font-manrope), sans-serif;
   --font-display: var(--font-instrument), sans-serif;
-  --font-code: var(--font-geist-mono), monospace;
+  --font-code: var(--font-manrope), monospace;
   --nav-font-sans: var(--font-body);
   --nav-font-display: var(--font-display);
 }
@@ -14,7 +14,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-manrope);
 }
 
 @theme {
@@ -51,7 +51,6 @@
   --animate-fade-in: fadeIn 0.6s ease-in-out;
   --animate-slide-up: slideUp 0.6s ease-out;
   --animate-slide-down: slideDown 0.6s ease-out;
-  --animate-blob: blob 7s infinite;
 }
 
 @keyframes fadeIn {
@@ -85,24 +84,6 @@
   100% {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-@keyframes blob {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-
-  100% {
-    transform: translate(0, 0) scale(1);
   }
 }
 
