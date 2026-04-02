@@ -13,6 +13,7 @@ import {
   ProjectFilter,
   getFeaturedProjectsByFilter,
 } from "@/lib/projects-data";
+import { filterBase, filterActive, filterInactive } from "@/lib/filter-styles";
 
 export function PortfolioSection() {
   const [activeCategory, setActiveCategory] = useState<ProjectFilter>("all");
@@ -21,13 +22,6 @@ export function PortfolioSection() {
     () => getFeaturedProjectsByFilter(activeCategory),
     [activeCategory],
   );
-  const filterBase =
-    "min-w-[120px] rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-300 font-[var(--nav-font-sans)]";
-  const filterActive =
-    "border-accent-gold/70 bg-accent-gold/15 text-accent-gold hover:border-accent-gold/80 hover:bg-accent-gold/25 active:bg-accent-gold/30";
-  const filterInactive =
-    "border-neutral-700 bg-neutral-900/60 text-neutral-200 hover:border-neutral-500 hover:bg-neutral-800/90 active:bg-neutral-800 active:border-neutral-400";
-
   return (
     <section
       id="portfolio"
@@ -73,7 +67,20 @@ export function PortfolioSection() {
           ))}
         </div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid or Empty State */}
+        {filteredItems.length === 0 ? (
+          <div className="text-center py-16 space-y-4">
+            <p className="text-neutral-400 text-lg">Belum ada proyek di kategori ini.</p>
+            <Button
+              variant="ghost"
+              size="md"
+              onClick={() => setActiveCategory("all")}
+              className={cn(filterBase, filterInactive)}
+            >
+              Lihat Semua Proyek
+            </Button>
+          </div>
+        ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredItems.map((item, index) => (
             <Link
@@ -115,6 +122,7 @@ export function PortfolioSection() {
             </Link>
           ))}
         </div>
+        )}
 
         {/* View More CTA */}
         <div className="text-center mt-12">
