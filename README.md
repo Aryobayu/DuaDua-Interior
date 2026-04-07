@@ -31,14 +31,14 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Scripts
 
-| Command             | Description                        |
-|---------------------|------------------------------------|
-| `npm run dev`       | Start development server           |
-| `npm run build`     | Create optimized production build  |
-| `npm run start`     | Start production server            |
-| `npm run lint`      | Run ESLint checks                  |
-| `npm run test`      | Run tests in watch mode            |
-| `npm run test:run`  | Run tests once and exit            |
+| Command            | Description                       |
+| ------------------ | --------------------------------- |
+| `npm run dev`      | Start development server          |
+| `npm run build`    | Create optimized production build |
+| `npm run start`    | Start production server           |
+| `npm run lint`     | Run ESLint checks                 |
+| `npm run test`     | Run tests in watch mode           |
+| `npm run test:run` | Run tests once and exit           |
 
 ## Testing
 
@@ -100,7 +100,7 @@ This project does not require any environment variables for local development.
 │   └── smooth-scroll.tsx     # Lenis wrapper
 ├── lib/
 │   ├── brand.ts              # Brand constants, JSON-LD schemas
-│   ├── projects-data.ts      # Project types, data, helpers
+│   ├── projects-data.ts      # Project types,Gambar data, helpers
 │   ├── filter-styles.ts      # Shared filter button classes
 │   ├── utils.ts              # cn() utility
 │   └── __tests__/            # Unit tests
@@ -132,15 +132,15 @@ Lihat [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) untuk panduan lengkap.
 
 ## Documentation
 
-| File | Deskripsi |
-|------|-----------|
-| [AGENTS.md](AGENTS.md) | Instruksi untuk AI coding agents |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Keputusan arsitektur & pola desain |
-| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Panduan workflow development |
-| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Instruksi deployment |
-| [docs/TESTING.md](docs/TESTING.md) | Panduan testing |
-| [docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md) | Panduan manajemen konten |
-| [COMMIT_GUIDELINES.md](COMMIT_GUIDELINES.md) | Standar commit Conventional Commits |
+| File                                           | Deskripsi                           |
+| ---------------------------------------------- | ----------------------------------- |
+| [AGENTS.md](AGENTS.md)                         | Instruksi untuk AI coding agents    |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)   | Keputusan arsitektur & pola desain  |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)     | Panduan workflow development        |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)       | Instruksi deployment                |
+| [docs/TESTING.md](docs/TESTING.md)             | Panduan testing                     |
+| [docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md) | Panduan manajemen konten            |
+| [COMMIT_GUIDELINES.md](COMMIT_GUIDELINES.md)   | Standar commit Conventional Commits |
 
 ## License
 

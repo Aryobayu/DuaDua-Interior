@@ -1,9 +1,11 @@
 import { ProjectsPageClient } from "@/components/projects/projects-page-client";
 import { Footer } from "@/components/sections/footer";
 import { Navigation } from "@/components/sections/navigation";
-import { normalizeProjectFilter } from "@/lib/projects-data";
 import { BRAND } from "@/lib/brand";
+import { normalizeProjectFilter } from "@/lib/projects-data";
 import type { Metadata } from "next";
+
+export const runtime = 'edge';
 
 export const metadata: Metadata = {
   title: "Proyek Interior | " + BRAND.name,

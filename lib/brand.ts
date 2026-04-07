@@ -5,7 +5,7 @@ export const BRAND = {
   phoneDisplay: "+62 813-2620-1614",
   phoneDigits: "6281326201614",
   location: "Semarang, Indonesia",
-  mapsUrl: "https://maps.app.goo.gl/7zVdp5PD9zCoJ9GD6",
+  mapsUrl: "https://maps.app.goo.gl/7zVdp5PD9coclearzCoJ9GD6cle",
   instagramUrl: "https://www.instagram.com/duadua_interior",
   facebookUrl: "https://web.facebook.com/p/Duadua-interior-100046135098678/?_rdc=1&_rdr",
   siteUrl: "https://duaduainteriors.com",
