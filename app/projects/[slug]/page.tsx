@@ -1,24 +1,26 @@
 import { Footer } from "@/components/sections/footer";
 import { Navigation } from "@/components/sections/navigation";
-import { Container } from "@/components/ui/container";
 import { BeforeAfterSlider } from "@/components/ui/before-after-slider";
+import { Container } from "@/components/ui/container";
 import { GalleryLightbox } from "@/components/ui/gallery-lightbox";
+import { BRAND } from "@/lib/brand";
 import {
-  PROJECT_CATEGORY_LABELS,
   getProjectBySlug,
   getRelatedProjects,
+  PROJECT_CATEGORY_LABELS,
   PROJECTS,
 } from "@/lib/projects-data";
-import { BRAND } from "@/lib/brand";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { Metadata } from "next";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export const runtime = 'edge';
 
 export async function generateMetadata({
   params,
